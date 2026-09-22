@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head th:replace="~{index :: head}"></head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav th:replace="~{index :: navbar}"></nav>
+
+    <main class="container flex-grow-1 py-3 d-flex flex-column justify-content-center">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-6">
+
+                <!-- INTESTAZIONE E NAVIGAZIONE INDIETRO -->
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h2 class="fw-bold text-white mb-0">
+                        <i class="fa-solid fa-id-card text-warning me-2"></i>Dettaglio Candidatura
+                    </h2>
+                    <a th:href="@{/admin/dashboard}" class="btn btn-outline-aulab btn-sm">
+                        <i class="fa-solid fa-arrow-left me-1"></i> Dashboard Admin
+                    </a>
+                </div>
+
+                <!-- CARD RIEPILOGO CANDIDATURA -->
+                <div class="form-card p-4 p-md-5 mb-4">
+
+                    <!-- USER INFO BOX -->
+                    <div class="d-flex align-items-center gap-3 p-3 mb-4 author-box">
+                        <div class="author-avatar"
+                            th:text="${#strings.substring(request.user.username, 0, 1).toUpperCase()}">U</div>
+                        <div>
+                            <span class="text-white-50 small text-uppercase d-block fw-bold">Candidato</span>
+                            <h4 class="fw-bold text-white mb-0" th:text="${request.user.username}">Nome Utente</h4>
+                        </div>
+                        <div class="ms-auto text-end">
+                            <span class="text-white-50 small text-uppercase d-block fw-bold mb-1 me-2">Ruolo
+                                Richiesto</span>
+                            <span class="badge-category pb-1 pt-1" th:text="${request.role.name}">ROLE_REVISOR</span>
+                        </div>
+                    </div>
+
+                    <!-- MOTIVAZIONE / BODY -->
+                    <div class="mb-4">
+                        <label class="form-label-aulab text-white-50 small text-uppercase">Messaggio di
+                            Motivazione</label>
+                        <div class="p-3 rounded-3 bg-dark border border-secondary text-white-50 lh-lg"
+                            th:text="${request.body}">
+                            Il candidato non ha fornito alcuna motivazione aggiuntiva.
+                        </div>
+                    </div>
+
+                    <!-- AZIONI: ACCETTA / RIFIUTA / TORNA INDIETRO -->
+                    <div
+                        class="d-flex flex-column flex-sm-row justify-content-start gap-2 pt-3 border-top border-secondary">
+
+                        <!-- Torna indietro -->
+                        <a th:href="@{/admin/dashboard}"
+                            class="btn btn-outline-aulab px-4 d-flex align-items-center justify-content-center">
+                            Annulla
+                        </a>
+
+                        <!-- Rifiuta / Elimina Richiesta -->
+                        <form th:action="@{/operations/career/request/reject/{id}(id=${request.id})}" method="POST"
+                            onclick="return confirm('Sei sicuro di voler rifiutare ed eliminare questa richiesta?');">
+                            <button type="submit" class="btn btn-outline-danger w-100 px-4">
+                                <i class="fa-solid fa-xmark me-1"></i> Rifiuta
+                            </button>
+                        </form>
+
+                        <!-- Accetta Richiesta -->
+                        <form th:action="@{/operations/career/request/accept/{id}(id=${request.id})}" method="POST">
+                            <button type="submit" class="btn btn-aulab w-100 px-4">
+                                <i class="fa-solid fa-check me-1"></i> Accetta Candidatura
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="~{index :: footer}"></footer>
+
+    <!-- Bootstrap Script -->
+    <div th:replace="~{index :: bootstrapScript}"></div>
+</body>
+
+</html>

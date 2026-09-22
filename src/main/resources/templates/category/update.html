@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head th:replace="~{index :: head}"></head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav th:replace="~{index :: navbar}"></nav>
+
+    <main class="container flex-grow-1 py-3 d-flex flex-column justify-content-center">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+
+                <!-- INTESTAZIONE -->
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h2 class="fw-bold text-white mb-0">
+                        <i class="fa-solid fa-pen-to-square text-warning me-2"></i>Modifica Categoria
+                    </h2>
+                    <a th:href="@{/admin/dashboard}" class="btn btn-outline-aulab btn-sm">
+                        <i class="fa-solid fa-arrow-left me-1"></i> Dashboard Admin
+                    </a>
+                </div>
+
+                <!-- CARD FORM -->
+                <div class="form-card p-4 p-md-5">
+                    <form th:action="@{/categories/update/{id}(id=${category.id})}" method="POST" th:object="${category}">
+                        
+                        <div class="mb-4">
+                            <label for="name" class="form-label-aulab">Nome Categoria</label>
+                            <input type="text" 
+                                   id="name" 
+                                   class="form-control form-control-aulab" 
+                                   placeholder="Nome della categoria" 
+                                   th:field="*{name}" 
+                                   required />
+                            <div class="form-text text-white-50 small mt-2">
+                                Modifica il nome della categoria selezionata.
+                            </div>
+                        </div>
+
+                        <!-- BOTTONI AZIONE -->
+                        <div class="d-flex justify-content-end gap-2 pt-3 border-top border-secondary">
+                            <a th:href="@{/admin/dashboard}" class="btn btn-outline-aulab px-4">
+                                Annulla
+                            </a>
+                            <button type="submit" class="btn btn-aulab px-4">
+                                <i class="fa-solid fa-rotate me-1"></i> Aggiorna Categoria
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="~{index :: footer}"></footer>
+
+    <!-- Bootstrap Script -->
+    <div th:replace="~{index :: bootstrapScript}"></div>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head th:replace="~{index :: head}"></head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav th:replace="~{index :: navbar}"></nav>
+
+    <main class="container min-vh-100 my-5">
+
+        <!-- INTESTAZIONE -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
+            <div>
+                <h2 class="fw-bold text-white mb-1" th:text="${title}">Tutti gli articoli</h2>
+                <p class="text-white-50 mb-0">Esplora gli ultimi contenuti pubblicati dalla nostra community.</p>
+            </div>
+        </div>
+
+        <!-- GRIGLIA ARTICOLI -->
+        <div class="row g-4" th:if="${#lists.size(articles) > 0}">
+            <div th:each="article : ${articles}" class="col-12 col-md-6 col-lg-4 d-flex align-items-stretch">
+
+                <!-- CARD ARTICOLO DARK -->
+                <div class="card-dashboard h-100 w-100 p-0 overflow-hidden d-flex flex-column justify-content-between">
+
+                    <div>
+                        <!-- IMMAGINE COPERTINA -->
+                        <div class="position-relative">
+                            <img th:if="${article.image != null}" th:src="${article.image.path}" class="card-img-top"
+                                alt="Immagine Articolo" style="height: 200px; object-fit: cover;">
+                            <img th:unless="${article.image != null}" th:src="@{/images/default.jpg}"
+                                class="card-img-top" alt="Default Image" style="height: 200px; object-fit: cover;">
+
+                            <!-- BADGE CATEGORIA SULL'IMMAGINE -->
+                            <span th:if="${article.category != null}"
+                                class="position-absolute top-0 end-0 m-3 badge bg-dark bg-opacity-75 text-warning border border-secondary backdrop-blur px-3 py-2"
+                                th:text="${article.category.name}">
+                                Categoria
+                            </span>
+                        </div>
+
+                        <!-- CORPO CARD -->
+                        <div class="p-4">
+                            <h5 class="fw-bold text-white mb-2" th:text="${article.title}">Titolo Articolo</h5>
+                            <p class="text-white-50 small mb-3 text-truncate" th:text="${article.subtitle}">
+                                Sottotitolo o estratto del contenuto dell'articolo...</p>
+                        </div>
+                    </div>
+
+                    <!-- FOOTER CARD CON AUTORE E BOTTONE -->
+                    <div class="p-4 pt-0">
+                        <div class="d-flex align-items-center justify-content-between pt-3 border-top border-secondary">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fa-solid fa-user-circle text-warning fs-5"></i>
+                                <small class="text-white-50 fw-semibold"
+                                    th:text="${article.user != null ? article.user.username : 'Anonimo'}">Autore</small>
+                            </div>
+                            <a th:href="@{/articles/detail/{id}(id=${article.id})}"
+                                class="btn btn-sm btn-outline-aulab">
+                                Leggi <i class="fa-solid fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- EMPTY STATE SE NON CI SONO ARTICOLI -->
+        <div class="row justify-content-center my-5" th:unless="${#lists.size(articles) > 0}">
+            <div class="col-12 col-md-8 text-center py-5">
+                <i class="fa-solid fa-newspaper fs-1 text-warning mb-3 d-block"></i>
+                <h3 class="fw-bold text-white mb-2">Nessun articolo presente</h3>
+                <p class="text-white-50">Non ci sono ancora articoli pubblicati in piattaforma. Torna a trovarci presto!
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="~{index :: footer}"></footer>
+
+    <!-- Bootstrap Script -->
+    <div th:replace="~{index :: bootstrapScript}"></div>
+</body>
+
+</html>

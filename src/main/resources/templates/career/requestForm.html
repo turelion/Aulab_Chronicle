@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head th:replace="~{index :: head}"></head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav th:replace="~{index :: navbar}"></nav>
+
+    <main class="container flex-grow-1 py-3 d-flex flex-column justify-content-center">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-7 col-lg-6">
+
+                <!-- INTESTAZIONE PAGINA -->
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h2 class="fw-bold text-white mb-0" th:text="${title}">Richiesta Collaborazione</h2>
+                    <a th:href="@{/}" class="btn btn-outline-aulab btn-sm">
+                        <i class="fa-solid fa-xmark me-1"></i> Annulla
+                    </a>
+                </div>
+
+                <!-- CARD FORM -->
+                <div class="form-card p-4 p-md-5">
+                    <form th:action="@{/operations/career/request/save}" method="POST" th:object="${careerRequest}">
+
+                        <!-- SCELTA RUOLO -->
+                        <div class="mb-4">
+                            <label for="role" class="form-label-aulab">Per quale ruolo vuoi candidarti?</label>
+                            <select id="role" th:field="*{role}" class="form-select form-select-aulab">
+                                <option th:each="role : ${roles}" th:value="${role.id}"
+                                    th:text="${#strings.substring(role.name, 5)}">
+                                    Ruolo
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- MOTIVAZIONE -->
+                        <div class="mb-4">
+                            <label for="body" class="form-label-aulab">Motivo della richiesta</label>
+                            <textarea id="body" class="form-control form-control-aulab" rows="6" th:field="*{body}"
+                                placeholder="Spiega brevemente perché vorresti ricoprire questo ruolo e quali sono le tue esperienze..."></textarea>
+                        </div>
+
+                        <!-- SUBMIT BUTTON -->
+                        <div class="pt-2">
+                            <button type="submit" class="btn btn-aulab w-100 py-2 fs-6">
+                                <i class="fa-solid fa-paper-plane me-2"></i>Invia Candidatura
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="~{index :: footer}"></footer>
+
+    <!-- Bootstrap Script -->
+    <div th:replace="~{index :: bootstrapScript}"></div>
+</body>
+
+</html>

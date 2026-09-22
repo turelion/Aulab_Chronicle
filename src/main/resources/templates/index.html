@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="it">
+
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title th:text="${title} ? ${title} + ' - Aulab Chronicle' : 'Aulab Chronicle'">Aulab Chronicle</title>
+
+    <!-- Google Font Inter per il look moderno stile Dev.to / Hashnode -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FontAwesome CDN per le icone -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+    <!-- FOGLIO DI STILE PERSONALIZZATO -->
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <!-- Flatpickr CSS per Datepicker Custom Dark -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+</head>
+
+<body>
+
+    <!-- NAV FRAGMENT -->
+    <nav th:fragment="navbar" class="navbar navbar-expand-xl py-2 sticky-top m-0 border-bottom border-secondary"
+        style="background-color: #0d1117;">
+        <div class="container">
+            <!-- Brand Aulab -->
+            <a class="navbar-brand d-flex align-items-center gap-2" th:href="@{/}">
+                <i class="fa-solid fa-code text-warning"></i>
+                <span>Aulab<span class="text-white">Chronicle</span></span>
+            </a>
+
+            <!-- Hamburger Button (Mobile) -->
+            <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-aulab" th:href="@{/}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-aulab" th:href="@{/articles}">Tutti gli articoli</a>
+                    </li>
+                </ul>
+
+                <!-- Form di Ricerca -->
+                <form class="d-flex mx-lg-3 my-2 my-lg-0" th:action="@{/articles/search}" method="get">
+                    <input class="form-control search-input me-2" type="search" name="keyword"
+                        placeholder="Cerca articoli..." aria-label="Search" required />
+                    <button class="btn btn-outline-aulab" type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+
+                <ul class="navbar-nav d-flex align-items-center gap-2 nav-actions-mobile">
+                    <!-- Se l'utente NON è loggato -->
+                    <li class="nav-item" sec:authorize="isAnonymous()">
+                        <a class="btn btn-outline-aulab btn-aulab btn-sm" th:href="@{/login}">Accedi</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAnonymous()">
+                        <a class="btn btn-aulab btn-sm" th:href="@{/register}">Registrati</a>
+                    </li>
+
+                    <!-- Se l'utente È loggato -->
+                    <li class="nav-item text-white-50 small d-flex align-items-center me-2"
+                        sec:authorize="isAuthenticated()">
+                        <span>Ciao,&nbsp;</span>
+                        <strong class="text-white"
+                            th:text="${#strings.arraySplit(#authentication.principal.fullname, ' ')[0]}">Nome</strong>&nbsp;
+
+                        <!-- Badge di ruolo -->
+                        <span class="badge bg-danger ms-1" sec:authorize="hasRole('ROLE_ADMIN')">Admin</span>
+                        <span class="badge bg-warning text-dark ms-1"
+                            sec:authorize="hasRole('ROLE_REVISOR') && !hasRole('ROLE_ADMIN')">Revisor</span>
+                        <span class="badge bg-info text-dark ms-1"
+                            sec:authorize="hasRole('ROLE_WRITER') && !hasRole('ROLE_REVISOR') && !hasRole('ROLE_ADMIN')">Writer</span>
+                        <span class="badge bg-secondary ms-1"
+                            sec:authorize="!hasRole('ROLE_ADMIN') && !hasRole('ROLE_REVISOR') && !hasRole('ROLE_WRITER')">User</span>
+                    </li>
+
+                    <!-- Link Dashboard in evidenza -->
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="nav-link nav-link-dashboard position-relative" th:href="@{/admin/dashboard}">
+                            <i class="fa-solid fa-user-shield me-1"></i>Dashboard Admin
+                            <span class="badge rounded-pill bg-danger ms-1" th:if="${careerRequests > 0}"
+                                th:text="${careerRequests}"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_REVISOR')">
+                        <a class="nav-link nav-link-dashboard position-relative" th:href="@{/revisor/dashboard}">
+                            <i class="fa-solid fa-list-check me-1"></i>Dashboard Revisor
+                            <span class="badge rounded-pill bg-danger ms-1" th:if="${articlesToBeRevised > 0}"
+                                th:text="${articlesToBeRevised}"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_WRITER')">
+                        <a class="nav-link nav-link-dashboard" th:href="@{/writer/dashboard}">
+                            <i class="fa-solid fa-feather me-1"></i>Dashboard Writer
+                        </a>
+                    </li>
+
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <a class="btn btn-aulab btn-sm" th:href="@{/articles/create}">
+                            <i class="fa-solid fa-pen me-1"></i> Scrivi
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="btn btn-outline-danger btn-sm" th:href="@{/logout}">
+                            <i class="fa-solid fa-right-from-bracket"></i> Esci
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- FOOTER FRAGMENT -->
+    <footer th:fragment="footer" class="py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <p class="mb-0 text-white-50 small">© 2026 <strong class="text-warning">Aulab Chronicle</strong>.
+                        Progetto Finale Java-Spring.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <span class="text-white-50 me-2 small">Vuoi scrivere con noi?</span>
+                    <a th:href="@{/operations/career/request}" class="btn btn-aulab btn-sm">Invia Candidatura</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOOTSTRAP SCRIPTS FRAGMENT -->
+    <div th:fragment="bootstrapScript">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Flatpickr JS -->
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://npmcdn.com/flatpickr/dist/l10n/it.js"></script>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head th:replace="~{index :: head}"></head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Navbar -->
+    <nav th:replace="~{index :: navbar}"></nav>
+
+    <main class="container flex-grow-1 d-flex align-items-center justify-content-center py-3">
+        <div class="row w-100 justify-content-center">
+            <div class="col-12 col-md-9 col-lg-7">
+
+                <!-- CARD REGISTRAZIONE -->
+                <div class="form-card p-4 p-md-4">
+
+                    <!-- INTESTAZIONE -->
+                    <div class="text-center mb-3">
+                        <i class="fa-solid fa-user-plus text-warning fs-2 mb-1"></i>
+                        <h3 class="fw-bold text-white mb-1">Crea un nuovo Profilo</h3>
+                        <p class="text-white-50 small mb-0">Compila i campi sottostanti per registrarti su Aulab
+                            Chronicle</p>
+                    </div>
+
+                    <!-- FORM -->
+                    <form method="post" th:action="@{/register/save}" th:object="${user}">
+
+                        <!-- NOME E COGNOME -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label-aulab">Nome</label>
+                                <input type="text" class="form-control form-control-aulab" id="firstName"
+                                    th:field="*{firstName}" placeholder="Mario"
+                                    th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid' : ''">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('firstName')}"
+                                    th:errors="*{firstName}">Nome non valido.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label-aulab">Cognome</label>
+                                <input type="text" class="form-control form-control-aulab" id="lastName"
+                                    th:field="*{lastName}" placeholder="Rossi"
+                                    th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid' : ''">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}"
+                                    th:errors="*{lastName}">Cognome non valido.</div>
+                            </div>
+                        </div>
+
+                        <!-- EMAIL -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label-aulab">Indirizzo Email</label>
+                            <input type="email" class="form-control form-control-aulab" id="email" th:field="*{email}"
+                                placeholder="nome@esempio.it"
+                                th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                                Email non valida.</div>
+                        </div>
+
+                        <!-- PASSWORD -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label-aulab">Password</label>
+                            <input type="password" class="form-control form-control-aulab" id="password"
+                                th:field="*{password}" placeholder="••••••••"
+                                th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}"
+                                th:errors="*{password}">Password non valida.</div>
+                        </div>
+
+                        <!-- SUBMIT -->
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-aulab py-2 fs-6">
+                                <i class="fa-solid fa-id-card me-2"></i>Registrati ora
+                            </button>
+                        </div>
+
+                        <!-- LINK LOGIN -->
+                        <div class="text-center pt-3 border-top border-secondary">
+                            <span class="text-white-50 me-1">Sei già registrato?</span>
+                            <a th:href="@{/login}" class="text-warning fw-semibold text-decoration-none">Accedi qui</a>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="~{index :: footer}"></footer>
+
+    <!-- Bootstrap Script -->
+    <div th:replace="~{index :: bootstrapScript}"></div>
+</body>
+
+</html>

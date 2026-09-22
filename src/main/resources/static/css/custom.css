@@ -1,0 +1,596 @@
+/* ==========================================================================
+   AULAB CHRONICLE - CUSTOM DARK & YELLOW THEME (Dev.to / Hashnode Style)
+   ========================================================================== */
+
+/* Definisco le variabili globali per mantenere i colori coerenti in tutto il sito */
+:root {
+    /* Palette Aulab Dark Mode */
+    --bg-main: #0f1117;
+    /* Sfondo principale ultra-scuro stile Hashnode */
+    --bg-card: #181b23;
+    /* Sfondo delle card e delle sezioni staccate */
+    --bg-card-hover: #222632;
+    /* Colore card al passaggio del mouse */
+    --border-color: #2a2e3d;
+    /* Bordo sottile per separare i moduli */
+
+    /* Toni di Giallo Aulab per il contrasto */
+    --aulab-yellow: #ffc107;
+    /* Giallo primario di accento */
+    --aulab-yellow-hover: #e0a800;
+    /* Giallo più scuro per gli stati hover */
+    --aulab-yellow-glow: rgba(255, 193, 7, 0.15);
+    /* Sfumatura/Glow per gli effetti focus */
+
+    /* Tipografia e Testi */
+    --text-primary: #f8f9fa;
+    /* Testo principale quasi bianco per massima leggibilità */
+    --text-muted: #a0a6b5;
+    /* Testo secondario (date, autori, sottotitoli) */
+
+    /* Font principale */
+    --font-family-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Impostazioni generali del body */
+body {
+    background-color: var(--bg-main) !important;
+    color: var(--text-primary) !important;
+    font-family: var(--font-family-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Personalizzazione Navbar in perfetto stile Dev.to */
+.navbar {
+    background-color: var(--bg-card) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-brand {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--aulab-yellow) !important;
+}
+
+/* Pulsanti personalizzati con tono giallo e transizioni morbide */
+.btn-aulab {
+    background-color: var(--aulab-yellow);
+    color: #000000;
+    font-weight: 600;
+    border: none;
+    transition: all 0.25s ease-in-out;
+}
+
+.btn-aulab:hover {
+    background-color: var(--aulab-yellow-hover);
+    color: #000000;
+    transform: translateY(-2px);
+    /* Effetto lieve sollevamento */
+    box-shadow: 0 4px 12px var(--aulab-yellow-glow);
+}
+
+.btn-outline-aulab {
+    border: 1px solid var(--aulab-yellow);
+    color: var(--aulab-yellow);
+    background: transparent;
+    transition: all 0.25s ease-in-out;
+}
+
+.btn-outline-aulab:hover {
+    background-color: var(--aulab-yellow);
+    color: #000000;
+}
+
+/* Card degli articoli stile Hashnode con border-highlight al passaggio del mouse */
+.article-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    transition: all 0.25s ease-in-out;
+}
+
+.article-card:hover {
+    background-color: var(--bg-card-hover);
+    border-color: var(--aulab-yellow);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Footer della card: assicura il padding attorno alla linea border-top */
+.article-card .card-footer {
+    padding: 0.85rem 1.25rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Titoli delle card con cambio colore dinamico */
+.article-card .card-title {
+    color: var(--text-primary);
+    transition: color 0.2s ease;
+}
+
+.article-card:hover .card-title {
+    color: var(--aulab-yellow);
+}
+
+/* Badge di Categoria stile Dev.to (Pillole gialle traslucide) */
+.badge-category {
+    background-color: var(--aulab-yellow-glow);
+    color: var(--aulab-yellow);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    font-weight: 500;
+    padding: 0.4em 0.8em;
+    border-radius: 20px;
+}
+
+/* Card Dashboard/Elenco senza hover elevato ma con bordo definito */
+.card-dashboard {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+/* Campo di input della ricerca personalizzato */
+.search-input {
+    background-color: var(--bg-main) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.search-input:focus {
+    border-color: var(--aulab-yellow) !important;
+    box-shadow: 0 0 0 0.25rem var(--aulab-yellow-glow) !important;
+}
+
+/* Placeholder personalizzato per la barra di ricerca: colore chiaro ad alto contrasto */
+.search-input::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 0.8;
+}
+
+/* Footer elegante agganciato in fondo */
+footer {
+    margin-top: auto;
+    background-color: var(--bg-card) !important;
+    border-top: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   HOME PAGE & HERO SECTION (Dev.to / Hashnode Layout)
+   ========================================================================== */
+
+/* Hero Banner in alto */
+.hero-section {
+    background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-main) 100%);
+    border-bottom: 1px solid var(--border-color);
+    padding: 3rem 0 2rem 0;
+}
+
+.hero-title {
+    font-weight: 800;
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+}
+
+/* Badge autore e data all'interno delle card */
+.author-avatar {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    background-color: var(--aulab-yellow);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    line-height: 1;
+    margin: 0 !important;
+}
+
+/* Pulsante di lettura / dettaglio */
+.btn-read-more {
+    color: var(--aulab-yellow);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.btn-read-more:hover {
+    color: var(--text-primary);
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   ALERT & MEDIA STYLES
+   ========================================================================== */
+
+/* Styling per le immagini nelle card (Hashnode / Dev.to style) */
+.article-card-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+    border-top-left-radius: 11px;
+    border-top-right-radius: 11px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Alert personalizzati per la Dark Mode */
+.alert-aulab-success {
+    background-color: rgba(255, 193, 7, 0.1) !important;
+    border: 1px solid var(--aulab-yellow) !important;
+    color: var(--aulab-yellow) !important;
+}
+
+.alert-aulab-danger {
+    background-color: rgba(220, 53, 69, 0.15) !important;
+    border: 1px solid #dc3545 !important;
+    color: #f8d7da !important;
+}
+
+/* ==========================================================================
+   ARTICLE DETAIL PAGE (Editorial Readability Style)
+   ========================================================================== */
+
+/* Header e Hero dell'articolo */
+.article-header {
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    padding: 3rem 0;
+}
+
+/* Styling per l'immagine nella pagina Dettaglio */
+.article-detail-img {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    background-color: var(--bg-main);
+}
+
+/* Corpo del testo dell'articolo */
+.article-body-content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #e2e8f0;
+}
+
+/* Box info autore in fondo all'articolo */
+.author-box {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+/* ==========================================================================
+   FORM & EDITOR STYLES (Dev.to Dark Form Style)
+   ========================================================================== */
+
+/* Contenitore stile scheda per i form */
+.form-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Campi di input, select e textarea scuri */
+.form-control-aulab,
+.form-select-aulab {
+    background-color: var(--bg-main) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+}
+
+.form-control-aulab:focus,
+.form-select-aulab:focus {
+    border-color: var(--aulab-yellow) !important;
+    box-shadow: 0 0 0 0.25rem var(--aulab-yellow-glow) !important;
+    outline: none;
+}
+
+.form-control-aulab::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 0.7;
+}
+
+/* Label personalizzate */
+.form-label-aulab {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+/* ==========================================================================
+   INPUT DATEPICKER & FILE PICKER CUSTOMIZATION
+   ========================================================================== */
+
+/* ==========================================================================
+   FLATPICKR DARK & YELLOW THEME
+   ========================================================================== */
+
+/* Pop-up calendario interamente scuro */
+.flatpickr-calendar {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Giorni selezionati e hover in Giallo Aulab */
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover {
+    background: var(--aulab-yellow) !important;
+    color: #000000 !important;
+    border-color: var(--aulab-yellow) !important;
+    font-weight: 700;
+}
+
+.flatpickr-day:hover {
+    background: var(--bg-card-hover) !important;
+    color: var(--aulab-yellow) !important;
+}
+
+/* Mese e intestazione */
+.flatpickr-months .flatpickr-month,
+span.flatpickr-weekday {
+    color: var(--text-primary) !important;
+    fill: var(--text-primary) !important;
+}
+
+/* Personalizzazione del pulsante "Scegli file" nell'input file */
+.form-control-aulab::file-selector-button {
+    background-color: var(--aulab-yellow);
+    color: #000000;
+    font-weight: 600;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    margin-right: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+}
+
+.form-control-aulab::file-selector-button:hover {
+    background-color: var(--aulab-yellow-hover);
+}
+
+/* Personalizzazione del pulsante "Scegli file" nell'input file */
+.form-control-aulab::file-selector-button {
+    background-color: var(--aulab-yellow);
+    color: #000000;
+    font-weight: 600;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    margin-right: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+}
+
+.form-control-aulab::file-selector-button:hover {
+    background-color: var(--aulab-yellow-hover);
+}
+
+/* Assicura che anche l'input generato da Flatpickr mostri il placeholder chiaro */
+.flatpickr-input::placeholder,
+input[readonly]::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 0.7;
+}
+
+/* Forzatura colore placeholder per gli input generati da Flatpickr */
+.flatpickr-input.form-control-aulab::placeholder,
+.flatpickr-mobile::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 0.8 !important;
+}
+
+/* ==========================================================================
+   DASHBOARD & TABLES STYLES (Admin / Revisor / Writer)
+   ========================================================================== */
+
+/* Carte Statistiche */
+.stat-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+/* Tabelle Scure Moderni */
+.table-aulab {
+    color: var(--text-primary) !important;
+    vertical-align: middle;
+    border-color: var(--border-color) !important;
+}
+
+.table-aulab>thead {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.table-aulab>thead th {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem;
+}
+
+.table-aulab>tbody tr {
+    background-color: var(--bg-card);
+    transition: background-color 0.2s ease;
+}
+
+.table-aulab>tbody tr:hover {
+    background-color: var(--bg-card-hover) !important;
+}
+
+.table-aulab td {
+    padding: 1rem;
+    border-color: var(--border-color);
+}
+
+/* ==========================================================================
+   FORCE DARK STYLES FOR BOOTSTRAP TABLES
+   ========================================================================== */
+
+/* Sovrascrivi lo sfondo predefinito di Bootstrap per tabelle e celle */
+.table-aulab,
+.table-aulab> :not(caption)>*>* {
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border-bottom-color: var(--border-color) !important;
+    box-shadow: none !important;
+}
+
+/* Intestazione della tabella */
+.table-aulab thead th {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+    color: var(--text-muted) !important;
+}
+
+/* Effetto Hover sulle righe */
+.table-aulab tbody tr:hover>* {
+    background-color: var(--bg-card-hover) !important;
+}
+
+/* ==========================================================================
+   Badge Dashboard Writer 
+   ========================================================================== */
+
+/* Badge di stato uniformi */
+.badge-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 130px;
+    /* Larghezza fissa identica per tutti */
+    padding: 6px 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* Pallino indicatore */
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* Stato: Pubblicato (Verde Desaturato/Muted) */
+.status-success {
+    background-color: rgba(46, 160, 67, 0.15);
+    color: #3fb950;
+    border: 1px solid rgba(63, 185, 80, 0.3);
+}
+
+.status-success .status-dot {
+    background-color: #3fb950;
+}
+
+/* Stato: Rifiutato (Rosso Muted) */
+.status-danger {
+    background-color: rgba(248, 81, 73, 0.15);
+    color: #f85149;
+    border: 1px solid rgba(248, 81, 73, 0.3);
+}
+
+.status-danger .status-dot {
+    background-color: #f85149;
+}
+
+/* Stato: In Revisione (Giallo Aulab / Muted) */
+.status-warning {
+    background-color: rgba(210, 153, 34, 0.15);
+    color: #e3b341;
+    border: 1px solid rgba(210, 153, 34, 0.3);
+}
+
+.status-warning .status-dot {
+    background-color: #e3b341;
+}
+
+/* ==========================================================================
+   NAVBAR IMPROVEMENTS
+   ========================================================================== */
+
+/* 1. Link Navigazione Standard (Home, Tutti gli articoli) */
+.nav-link-aulab {
+    color: rgba(255, 255, 255, 0.65) !important;
+    font-weight: 500;
+    padding: 0.5rem 0.8rem !important;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-link-aulab:hover {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* 2. Link Dashboard Riservate (Admin, Revisor, Writer) */
+.nav-link-dashboard {
+    color: var(--aulab-yellow) !important;
+    font-weight: 600;
+    padding: 0.5rem 0.8rem !important;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    background-color: rgba(255, 193, 7, 0.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-link-dashboard:hover {
+    color: #000000 !important;
+    background-color: var(--aulab-yellow) !important;
+    border-color: var(--aulab-yellow) !important;
+}
+
+/* 3. Tasto Hamburger Mobile Visibile */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.85%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* ==========================================================================
+   NAVBAR RESPONSIVE (menu mobile coerente)
+   ========================================================================== */
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        align-items: flex-start !important;
+    }
+
+    .nav-actions-mobile {
+        width: 100%;
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--border-color);
+        gap: 0.5rem !important; /* spaziatura uniforme tra i pulsanti impilati */
+    }
+
+    .nav-actions-mobile .nav-item {
+        width: 100%;
+    }
+
+    .nav-actions-mobile .nav-link-dashboard,
+    .nav-actions-mobile .btn-aulab,
+    .nav-actions-mobile .btn-outline-danger {
+        width: 100%;
+        text-align: center;
+    }
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head th:replace="~{index :: head}"></head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav th:replace="~{index :: navbar}"></nav>
+
+    <main class="container my-5 min-vh-100">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-9 col-xl-8">
+
+                <!-- BADGE CATEGORIA E AZIONI -->
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span th:if="${article.category != null}">
+                        <a th:href="@{/categories/search/{id}(id=${article.category.id})}"
+                            class="badge-category text-decoration-none" th:text="${article.category.name}">
+                            Categoria
+                        </a>
+                    </span>
+                    <span th:unless="${article.category != null}" class="badge-category">
+                        Generale
+                    </span>
+
+                    <button onclick="goBack()" class="btn btn-outline-aulab btn-sm">
+                        <i class="fa-solid fa-arrow-left me-1"></i> Indietro
+                    </button>
+                </div>
+
+                <!-- TITOLO E SOTTOTITOLO -->
+                <h1 class="display-4 fw-bold text-white mb-3" th:text="${article.title}">Titolo dell'articolo</h1>
+                <p class="fs-5 text-white-50 mb-4" th:text="${article.subtitle}">Sottotitolo descrittivo per introdurre
+                    l'articolo</p>
+
+                <!-- METADATI AUTORE E DATA -->
+                <div class="d-flex align-items-center justify-content-between p-3 mb-4 author-box">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="author-avatar"
+                            th:text="${article.user != null ? #strings.substring(article.user.username, 0, 1).toUpperCase() : 'A'}">
+                            A
+                        </div>
+                        <div>
+                            <div class="fw-bold text-white">
+                                <a th:if="${article.user != null}" th:href="@{/search/{id}(id=${article.user.id})}"
+                                    th:text="${article.user.username}"
+                                    class="text-white text-decoration-none">Autore</a>
+                                <span th:unless="${article.user != null}" class="text-white-50">Anonimo</span>
+                            </div>
+                            <small class="text-white-50">
+                                Pubblicato il <span th:text="${article.publishDate}">01/01/2026</span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IMMAGINE DI COPERTINA -->
+                <div class="mb-5 text-center">
+                    <img th:if="${article.image != null}" th:src="${article.image.path}"
+                        class="article-detail-img shadow-sm" alt="Copertina Articolo">
+                    <img th:unless="${article.image != null}" th:src="@{/images/default.jpg}"
+                        class="article-detail-img shadow-sm" alt="Immagine Predefinita">
+                </div>
+
+                <!-- CORPO DEL TESTO -->
+                <article class="article-body text-light fs-5 lh-lg mb-4"
+                    style="white-space: pre-line; overflow-wrap: break-word;" th:text="${article.body}">
+                    Corpo del testo dell'articolo...
+                </article>
+
+                <hr class="border-secondary my-5">
+
+                <!-- PULSANTE TORNA INDIETRO -->
+                <div class="d-flex justify-content-center">
+                    <button onclick="goBack()" class="btn btn-aulab px-4 py-2">
+                        <i class="fa-solid fa-arrow-left me-2"></i>Torna agli articoli
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="~{index :: footer}"></footer>
+
+    <!-- Script per navigazione indietro -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+    <!-- Bootstrap Script -->
+    <div th:replace="~{index :: bootstrapScript}"></div>
+</body>
+
+</html>

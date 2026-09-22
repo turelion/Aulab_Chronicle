@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head th:replace="~{index :: head}"></head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav th:replace="~{index :: navbar}"></nav>
+
+    <main class="container min-vh-100 my-5">
+
+        <!-- INTESTAZIONE E SUMMARY CARDS -->
+        <div class="row mb-4">
+            <div class="col-12 text-center text-md-start mb-4">
+                <h1 class="fw-bold text-white mb-1">
+                    <i class="fa-solid fa-user-shield text-warning me-2"></i>Dashboard Admin
+                </h1>
+                <p class="text-white-50 mb-0">Gestisci le candidature degli utenti e le categorie della piattaforma.</p>
+            </div>
+
+            <!-- Stat Cards -->
+            <div class="col-12 col-md-6 mb-3 mb-md-0">
+                <div class="stat-card d-flex align-items-center justify-content-between">
+                    <div>
+                        <span class="text-white-50 small text-uppercase fw-bold">Richieste Ruolo</span>
+                        <h2 class="text-white fw-bold mb-0 mt-1" th:text="${requests != null ? requests.size() : 0}">0
+                        </h2>
+                    </div>
+                    <div class="fs-1 text-warning opacity-75">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="stat-card d-flex align-items-center justify-content-between">
+                    <div>
+                        <span class="text-white-50 small text-uppercase fw-bold">Categorie Totali</span>
+                        <h2 class="text-white fw-bold mb-0 mt-1"
+                            th:text="${categories != null ? categories.size() : 0}">0</h2>
+                    </div>
+                    <div class="fs-1 text-warning opacity-75">
+                        <i class="fa-solid fa-tags"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABELLA RICHIESTE RUOLO -->
+        <section class="row mb-5">
+            <div class="col-12">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h3 class="fw-bold text-white mb-0 fs-4">
+                        <i class="fa-solid fa-inbox text-warning me-2"></i>Richieste di Candidatura
+                    </h3>
+                </div>
+
+                <div class="table-responsive rounded-3 border border-secondary">
+                    <table class="table table-aulab mb-0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Utente</th>
+                                <th>Ruolo Richiesto</th>
+                                <th class="text-end">Azione</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="request : ${requests}">
+                                <td class="fw-bold text-white-50" th:text="'#' + ${request.id}">#1</td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="author-avatar"
+                                            th:text="${#strings.substring(request.user.username, 0, 1).toUpperCase()}">U
+                                        </div>
+                                        <span class="fw-semibold text-white"
+                                            th:text="${request.user.username}">Utente</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge-category" th:text="${request.role.name}">Ruolo</span>
+                                </td>
+                                <td class="text-end">
+                                    <a th:href="@{/operations/career/request/detail/{id}(id=${request.id})}"
+                                        class="btn btn-aulab btn-sm">
+                                        <i class="fa-solid fa-eye me-1"></i> Dettaglio
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr th:if="${requests == null || requests.isEmpty()}">
+                                <td colspan="4" class="text-center py-4 text-white-50">
+                                    Nessuna richiesta di candidatura in attesa.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TABELLA CATEGORIE -->
+        <section class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="fw-bold text-white mb-0 fs-4">
+                        <i class="fa-solid fa-layer-group text-warning me-2"></i>Gestione Categorie
+                    </h3>
+                    <a th:href="@{/categories/create}" class="btn btn-aulab">
+                        <i class="fa-solid fa-plus me-1"></i> Nuova Categoria
+                    </a>
+                </div>
+
+                <div class="table-responsive rounded-3 border border-secondary">
+                    <table class="table table-aulab mb-0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome Categoria</th>
+                                <th class="text-end">Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="category : ${categories}">
+                                <td class="fw-bold text-white-50" th:text="'#' + ${category.id}">#1</td>
+                                <td class="fw-semibold text-white" th:text="${category.name}">Nome Categoria</td>
+                                <td class="text-end">
+                                    <div class="d-inline-flex gap-2">
+                                        <a th:href="@{/categories/edit/{id}(id=${category.id})}"
+                                            class="btn btn-outline-aulab btn-sm" title="Modifica">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+                                        <a th:href="@{/categories/delete/{id}(id=${category.id})}"
+                                            class="btn btn-outline-danger btn-sm"
+                                            onclick="return confirm('Sei sicuro di voler eliminare questa categoria?');"
+                                            title="Elimina">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:if="${categories == null || categories.isEmpty()}">
+                                <td colspan="3" class="text-center py-4 text-white-50">
+                                    Nessuna categoria disponibile.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="~{index :: footer}"></footer>
+
+    <!-- Bootstrap Script -->
+    <div th:replace="~{index :: bootstrapScript}"></div>
+</body>
+
+</html>

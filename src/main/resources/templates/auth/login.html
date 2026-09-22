@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head th:replace="~{index :: head}"></head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Navbar -->
+    <nav th:replace="~{index :: navbar}"></nav>
+
+    <main class="container flex-grow-1 d-flex align-items-center justify-content-center py-3">
+        <div class="row w-100 justify-content-center">
+            <div class="col-12 col-md-8 col-lg-5">
+
+                <!-- CARD LOGIN -->
+                <div class="form-card p-4 p-md-5">
+
+                    <!-- INTESTAZIONE -->
+                    <div class="text-center mb-4">
+                        <i class="fa-solid fa-right-to-bracket text-warning fs-1 mb-2"></i>
+                        <h3 class="fw-bold text-white mb-1">Accedi ad Aulab Chronicle</h3>
+                        <p class="text-white-50 small">Inserisci le tue credenziali per accedere alla piattaforma</p>
+                    </div>
+
+                    <!-- ALERT ERRORE CREDENZIALI -->
+                    <div th:if="${param.error}"
+                        class="alert alert-danger bg-danger bg-opacity-10 border border-danger text-danger mb-4"
+                        role="alert">
+                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                        Indirizzo email o password non corretti!
+                    </div>
+
+                    <!-- ALERT LOGOUT -->
+                    <div th:if="${param.logout}"
+                        class="alert alert-info bg-info bg-opacity-10 border border-info text-info mb-4" role="alert">
+                        <i class="fa-solid fa-circle-info me-2"></i>
+                        Ti sei disconnesso correttamente dalla piattaforma.
+                    </div>
+
+                    <!-- FORM -->
+                    <form method="post" th:action="@{/login}">
+
+                        <!-- EMAIL -->
+                        <div class="mb-4">
+                            <label for="username" class="form-label-aulab">Indirizzo Email</label>
+                            <input type="email" class="form-control form-control-aulab" id="username" name="username"
+                                placeholder="nome@esempio.it" required>
+                        </div>
+
+                        <!-- PASSWORD -->
+                        <div class="mb-4">
+                            <label for="password" class="form-label-aulab">Password</label>
+                            <input type="password" class="form-control form-control-aulab" id="password" name="password"
+                                placeholder="••••••••" required>
+                        </div>
+
+                        <!-- SUBMIT -->
+                        <div class="d-grid mb-4">
+                            <button type="submit" class="btn btn-aulab py-2 fs-6">
+                                <i class="fa-solid fa-right-to-bracket me-2"></i>Accedi
+                            </button>
+                        </div>
+
+                        <!-- LINK REGISTRAZIONE -->
+                        <div class="text-center pt-3 border-top border-secondary">
+                            <span class="text-white-50 me-1">Non sei ancora registrato?</span>
+                            <a th:href="@{/register}" class="text-warning fw-semibold text-decoration-none">Crea un
+                                account</a>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="~{index :: footer}"></footer>
+
+    <!-- Bootstrap Script -->
+    <div th:replace="~{index :: bootstrapScript}"></div>
+</body>
+
+</html>

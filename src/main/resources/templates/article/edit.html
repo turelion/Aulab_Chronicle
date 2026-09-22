@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head th:replace="~{index :: head}"></head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav th:replace="~{index :: navbar}"></nav>
+
+    <main class="container min-vh-100 my-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-9 col-lg-8">
+
+                <!-- INTESTAZIONE SCHEDA -->
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h2 class="fw-bold text-white mb-0">
+                        <i class="fa-solid fa-pen-to-square text-warning me-2"></i>
+                        <span>Modifica Articolo</span>
+                    </h2>
+                    <a th:href="@{/writer/dashboard}" class="btn btn-outline-aulab btn-sm">
+                        <i class="fa-solid fa-xmark me-1"></i> Annulla
+                    </a>
+                </div>
+
+                <!-- CARD FORM IN STILE DEV.TO DARK -->
+                <div class="form-card p-4 p-md-5">
+                    <form th:action="@{/articles/update/{id}(id=${article.id})}" method="POST" th:object="${article}"
+                        enctype="multipart/form-data">
+
+                        <!-- TITOLO -->
+                        <div class="mb-4">
+                            <label for="title" class="form-label-aulab">Titolo dell'Articolo</label>
+                            <input type="text" id="title" class="form-control form-control-aulab" th:field="*{title}"
+                                placeholder="Es: Guida completa a Spring Boot e Thymeleaf...">
+                            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                                class="text-danger small mt-2 mb-0">
+                            </p>
+                        </div>
+
+                        <!-- SOTTOTITOLO -->
+                        <div class="mb-4">
+                            <label for="subtitle" class="form-label-aulab">Sottotitolo / Estratto</label>
+                            <input type="text" id="subtitle" class="form-control form-control-aulab"
+                                th:field="*{subtitle}" placeholder="Breve sintesi per la card in Home Page...">
+                            <p th:if="${#fields.hasErrors('subtitle')}" th:errors="*{subtitle}"
+                                class="text-danger small mt-2 mb-0">
+                            </p>
+                        </div>
+
+                        <!-- CATEGORIA E DATA SU DUE COLONNE -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="category" class="form-label-aulab">Categoria</label>
+                                <select id="category" th:field="*{category}" class="form-select form-select-aulab">
+                                    <option value="">-- Seleziona Categoria --</option>
+                                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}">
+                                    </option>
+                                </select>
+                                <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}"
+                                    class="text-danger small mt-2 mb-0">
+                                </p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="publishDate" class="form-label-aulab">Data di Pubblicazione</label>
+                                <input type="text" id="publishDate" class="form-control form-control-aulab"
+                                    th:field="*{publishDate}">
+                                <p th:if="${#fields.hasErrors('publishDate')}" th:errors="*{publishDate}"
+                                    class="text-danger small mt-2 mb-0">
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- CORPO DELL'ARTICOLO -->
+                        <div class="mb-4">
+                            <label for="body" class="form-label-aulab">Corpo dell'Articolo</label>
+                            <textarea id="body" class="form-control form-control-aulab" rows="8" th:field="*{body}"
+                                placeholder="Scrivi qui il contenuto completo del tuo articolo..."></textarea>
+                            <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}"
+                                class="text-danger small mt-2 mb-0">
+                            </p>
+                        </div>
+
+                        <!-- UPLOAD IMMAGINE -->
+                        <div class="mb-4">
+                            <label for="image" class="form-label-aulab">Sostituisci Immagine di Copertina
+                                (opzionale)</label>
+                            <input type="file" name="file" id="image" class="form-control form-control-aulab">
+                        </div>
+
+                        <!-- SUBMIT BUTTON -->
+                        <div class="pt-2">
+                            <button type="submit" class="btn btn-aulab w-100 py-2 fs-6">
+                                <i class="fa-solid fa-floppy-disk me-2"></i>Salva Modifiche
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="~{index :: footer}"></footer>
+
+    <!-- Bootstrap Script -->
+    <div th:replace="~{index :: bootstrapScript}"></div>
+
+    <!-- Inizializzazione Flatpickr -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            flatpickr("#publishDate", {
+                locale: "it",
+                dateFormat: "Y-m-d",
+                altInput: true,
+                altFormat: "d/m/Y",
+                allowInput: true,
+                disableMobile: "true",
+                defaultDate: "today",
+                onReady: function (selectedDates, dateStr, instance) {
+                    if (instance.altInput) {
+                        instance.altInput.classList.add("form-control", "form-control-aulab");
+                        instance.altInput.placeholder = "Seleziona la data...";
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
