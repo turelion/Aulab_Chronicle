@@ -1,0 +1,5 @@
+{
+  "name": "Aulab Chronicle Demo",
+  "containerEnv": { "SPRING_PROFILES_ACTIVE": "demo" },
+  "forwardPorts": [8080]
+}
