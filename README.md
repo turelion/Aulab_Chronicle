@@ -1,7 +1,7 @@
 # 📰 Aulab Chronicle — Piattaforma Editoriale Multiruolo
 
-[![Java](https://img.shields.io/badge/Java-17%2B-orange.svg)](https://www.oracle.com/java/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Spring Security](https://img.shields.io/badge/Spring%20Security-RBAC-blue.svg)](https://spring.io/projects/spring-security)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-blue.svg)](https://www.mysql.com/)
 [![Supabase](https://img.shields.io/badge/Supabase-Image%20Storage-green.svg)](https://supabase.com/)
@@ -9,7 +9,53 @@
 
 **Aulab Chronicle** è una piattaforma editoriale web completa e strutturata, progettata per gestire un intero giornale digitale attraverso un workflow di pubblicazione multi-ruolo (Admin, Revisore, Redattore/Writer, Utente). 
 
-Il progetto implementa un'architettura robusta basata su **Spring Boot 3**, **Spring Security**, **Thymeleaf** e **MySQL**, integrando servizi cloud per il media storage (**Supabase**) e l'invio asincrono delle email (**Mailtrap**).
+Il progetto implementa un'architettura robusta basata su **Spring Boot**, **Spring Security**, **Thymeleaf** e **MySQL**, integrando servizi cloud per il media storage (**Supabase**) e l'invio asincrono delle email (**Mailtrap**).
+
+---
+
+## 🧭 Due modi per usare il progetto
+
+Il repository ha due branch, pensati per scopi diversi:
+
+| Branch | A cosa serve | Database e servizi |
+| :--- | :--- | :--- |
+| [`demo`](../../tree/demo) | **Provare subito l'applicazione online**, senza installare nulla (pensato per i recruiter) | H2 in memoria con dati di prova. Supabase e Mailtrap non necessari |
+| [`main`](../../tree/main) | **Scaricare ed eseguire il progetto completo in locale** | MySQL, Supabase e Mailtrap |
+
+- Vuoi **vedere l'applicazione in funzione**? Vai alla sezione [Demo online (GitHub Codespaces)](#-demo-online-github-codespaces).
+- Vuoi **scaricare il progetto e lavorarci in locale**? Vai alla sezione [Installazione e configurazione locale](#-guida-allinstallazione-e-configurazione-locale).
+
+---
+
+## 🎯 Demo online (GitHub Codespaces)
+
+Per provare il progetto **senza installare nulla** è disponibile il branch dedicato `demo`, che si avvia direttamente nel browser tramite GitHub Codespaces. Usa un database **H2 in memoria** già popolato con utenti, categorie e articoli di prova, quindi non servono MySQL, Supabase o Mailtrap.
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/turelion/Aulab_Chronicle/tree/demo)
+
+### Come avviarla
+1. Clicca sul badge qui sopra (serve un account GitHub gratuito) oppure vai su **Code → Codespaces → Create codespace on demo** dopo aver selezionato il branch `demo`.
+2. Attendi il caricamento di VS Code nel browser.
+3. Nel terminale integrato lancia:
+   ```bash
+   mvn spring-boot:run
+   ```
+4. Quando compare la notifica sulla porta **8080**, clicca su **Open in Browser** (in alternativa apri la scheda **Ports** e clicca sull'icona del globo accanto alla porta 8080).
+
+### Utenti di prova
+
+| Ruolo | Email | Password |
+| :--- | :--- | :--- |
+| **Admin** | `admin@aulabpost.it` | `admin123` |
+| **Revisor** | `revisore@aulabpost.it` | `revisore123` |
+| **Writer** | `autore@aulabpost.it` | `autore123` |
+| **User** | `utente@aulabpost.it` | `utente123` |
+
+### Cosa cambia nella versione demo
+- Il database è **in memoria**: i dati si azzerano a ogni riavvio dell'applicazione.
+- Il **caricamento delle immagini** (Supabase) e l'**invio delle email** (Mailtrap) non sono attivi: gli articoli usano l'immagine di default.
+- Tutte le funzionalità di ruolo (workflow editoriale, revisione, candidature, gestione categorie) sono provabili con gli utenti sopra.
+- Il profilo Spring `demo` si attiva in automatico nel Codespace, e i dati di prova vengono creati solo con questo profilo.
 
 ---
 
@@ -51,11 +97,11 @@ Il progetto implementa un'architettura robusta basata su **Spring Boot 3**, **Sp
 
 ## 🛠️ Tech Stack & Strumenti
 
-- **Language**: Java 17+
-- **Framework**: Spring Boot 3.x
+- **Language**: Java 21
+- **Framework**: Spring Boot 4.x
 - **Security**: Spring Security (Role-Based Access Control)
 - **Data Access**: Spring Data JPA / Hibernate
-- **Database**: MySQL 8.0
+- **Database**: MySQL 8.0 (H2 in memoria nel branch `demo`)
 - **Frontend Template**: Thymeleaf + HTML5, Bootstrap 5, Custom CSS, FontAwesome
 - **Cloud Media Storage**: Supabase Bucket Storage (API REST)
 - **Mail Server**: Mailtrap (SMTP Driver + Spring Mail)
@@ -76,16 +122,18 @@ Il progetto implementa un'architettura robusta basata su **Spring Boot 3**, **Sp
 
 ## 🚀 Guida all'Installazione e Configurazione Locale
 
+> Questa guida riguarda la **versione completa del progetto (branch `main`)**, da eseguire sul proprio computer con MySQL, Supabase e Mailtrap. Per una prova rapida senza installazioni usa la [demo online](#-demo-online-github-codespaces).
+
 ### 📋 Prerequisiti
-- **Java JDK 17** o superiore installato.
+- **Java JDK 21** o superiore installato.
 - **Maven** installato (o wrapper `./mvnw` incluso).
 - **MySQL Server** attivo localmente (es. via XAMPP, MySQL Workbench o Docker).
 - Account gratuito su **Supabase** (Bucket pubblico per le immagini) e **Mailtrap** (Testing Inbox SMTP).
 
-### 1. Clonare il Repository
+### 1. Clonare il Repository (branch `main`)
 ```bash
-git clone https://github.com/TUO_USERNAME/aulab-chronicle.git
-cd aulab-chronicle
+git clone -b main https://github.com/turelion/Aulab_Chronicle.git
+cd Aulab_Chronicle
 ```
 
 ### 2. Configurare il Database MySQL
@@ -135,7 +183,7 @@ L'applicazione sarà raggiungibile all'indirizzo: `http://localhost:8080`
 
 ---
 
-## 🔑 Credenziali di Default per il Test
+## 🔑 Credenziali di Default per il Test (versione locale)
 
 Se hai popolato il DB con lo script iniziale:
 
@@ -144,6 +192,8 @@ Se hai popolato il DB con lo script iniziale:
 | **Admin** | `admin@aulab.it` | `12345678` |
 | **User** | Registrati dal form `/register` | Inserita in registrazione |
 
+> Per gli utenti di prova della **demo online** vedi la tabella nella [sezione dedicata](#-demo-online-github-codespaces).
+
 ---
 
 ## 👨‍💻 Autore
@@ -151,3 +201,4 @@ Se hai popolato il DB con lo script iniziale:
 Sviluppato con passione come progetto finale per la specializzazione in Java-Spring per la Digital Factory Aulab.
 - GitHub: [@turelion](https://github.com/turelion)
 - LinkedIn: [Salvatore Leone](https://linkedin.com/in/salvatore-leone-full-stack-devback/)
+
