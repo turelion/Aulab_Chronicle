@@ -112,6 +112,13 @@
 		</dependency>
 	</dependencies>
 
+	<!-- H2 Database per demo github -->
+	<dependency>
+    	<groupId>com.h2database</groupId>
+    	<artifactId>h2</artifactId>
+    	<scope>runtime</scope>
+	</dependency>˙
+
 	<build>
 		<plugins>
 			<plugin>
